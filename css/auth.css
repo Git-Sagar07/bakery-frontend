@@ -1,0 +1,304 @@
+/* =========================
+   AUTH PAGES (Login/Signup)
+========================= */
+
+.auth-section {
+  min-height: calc(100vh - 70px);
+  background: linear-gradient(135deg, #fffaf5 0%, #fff8f0 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 5%;
+}
+
+.auth-container {
+  width: 100%;
+  max-width: 480px;
+}
+
+.auth-card {
+  background: white;
+  padding: 45px 40px;
+  border-radius: 25px;
+  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  animation: slideUp 0.5s ease;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.auth-card h1 {
+  font-size: 2.2rem;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.auth-subtitle {
+  font-size: 1rem;
+  color: #666;
+  margin-bottom: 35px;
+}
+
+/* =========================
+   AUTH FORM
+========================= */
+
+.auth-form {
+  text-align: left;
+}
+
+.form-group {
+  margin-bottom: 22px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 14px 18px;
+  border: 2px solid #ffd7c2;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  font-family: "Poppins", sans-serif;
+  background: #fffaf5;
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+.form-group input::placeholder {
+  color: #aaa;
+}
+
+.form-group input:focus {
+  border-color: #d35400;
+  box-shadow: 0 0 0 4px rgba(211, 84, 0, 0.1);
+  background: white;
+  transform: translateY(-2px);
+}
+
+.form-group input:hover {
+  border-color: #e67e22;
+}
+
+/* =========================
+   AUTH BUTTON
+========================= */
+
+.btn-auth {
+  width: 100%;
+  padding: 15px 30px;
+  background: linear-gradient(135deg, #d35400, #e67e22);
+  color: white;
+  border: none;
+  border-radius: 30px;
+  font-size: 1.05rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: "Poppins", sans-serif;
+  margin-top: 15px;
+  box-shadow: 0 4px 15px rgba(211, 84, 0, 0.2);
+}
+
+.btn-auth:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(211, 84, 0, 0.35);
+  background: linear-gradient(135deg, #e67e22, #d35400);
+}
+
+.btn-auth:active {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 15px rgba(211, 84, 0, 0.25);
+}
+
+/* =========================
+   AUTH FOOTER
+========================= */
+
+.auth-footer {
+  margin-top: 30px;
+  font-size: 0.95rem;
+  color: #666;
+  text-align: center;
+}
+
+.auth-footer a {
+  color: #d35400;
+  font-weight: 600;
+  text-decoration: none;
+  transition: 0.3s ease;
+  border-bottom: 2px solid transparent;
+}
+
+.auth-footer a:hover {
+  color: #e67e22;
+  border-bottom-color: #e67e22;
+}
+
+/* =========================
+   RESPONSIVE DESIGN
+========================= */
+
+@media (max-width: 768px) {
+  .auth-section {
+    padding: 40px 5%;
+  }
+
+  .auth-card {
+    padding: 35px 30px;
+  }
+
+  .auth-card h1 {
+    font-size: 1.9rem;
+  }
+
+  .auth-subtitle {
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .auth-section {
+    padding: 30px 5%;
+    min-height: calc(100vh - 60px);
+  }
+
+  .auth-card {
+    padding: 30px 25px;
+    border-radius: 20px;
+  }
+
+  .auth-card h1 {
+    font-size: 1.6rem;
+  }
+
+  .auth-subtitle {
+    font-size: 0.9rem;
+    margin-bottom: 25px;
+  }
+
+  .form-group input {
+    padding: 12px 16px;
+    font-size: 0.9rem;
+  }
+
+  .btn-auth {
+    padding: 13px 25px;
+    font-size: 1rem;
+  }
+
+  .auth-footer {
+    font-size: 0.9rem;
+    margin-top: 25px;
+  }
+}
+
+@media (max-width: 360px) {
+  .auth-card {
+    padding: 25px 20px;
+  }
+
+  .auth-card h1 {
+    font-size: 1.4rem;
+  }
+}
+/* =========================
+   PASSWORD WRAP (show/hide)
+========================= */
+
+.password-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-wrap input {
+  padding-right: 48px !important;
+}
+
+.toggle-pwd {
+  position: absolute;
+  right: 12px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.1rem;
+  padding: 4px;
+  line-height: 1;
+  opacity: 0.65;
+  transition: opacity 0.2s;
+}
+
+.toggle-pwd:hover {
+  opacity: 1;
+}
+
+/* Password strength label */
+.pwd-strength-label {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 600;
+  margin-top: 5px;
+  min-height: 18px;
+  transition: color 0.3s;
+}
+
+/* =========================================
+   PREMIUM AUTH UPGRADES
+========================================= */
+
+/* Richer background */
+.auth-section {
+  background: radial-gradient(ellipse at 70% 30%, #fff8f0 0%, #fffaf5 40%, #fff3e8 100%);
+}
+
+/* Floating card with deeper shadow */
+.auth-card {
+  box-shadow: 0 20px 60px rgba(211,84,0,0.1), 0 4px 20px rgba(0,0,0,0.06);
+  border: 1px solid rgba(255,215,194,0.4);
+}
+
+/* Input glow on focus */
+.form-group input:focus {
+  border-color: #d35400;
+  box-shadow: 0 0 0 4px rgba(211,84,0,0.1), 0 2px 8px rgba(211,84,0,0.08);
+  transform: translateY(-1px);
+}
+
+/* Auth button – bounce */
+.btn-auth {
+  transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  letter-spacing: 0.2px;
+}
+.btn-auth:hover {
+  transform: translateY(-3px) scale(1.01);
+  box-shadow: 0 10px 28px rgba(211,84,0,0.38);
+}
+
+/* Password requirements hint box */
+.pwd-requirements {
+  background: #fffaf5;
+  border: 1.5px solid #ffd7c2;
+  border-radius: 10px;
+  padding: 10px 14px;
+  margin-top: 8px;
+  font-size: 0.8rem;
+  color: #666;
+  line-height: 1.7;
+}
+.pwd-requirements strong { color: #d35400; }

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Menu - My Bakery</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Pacifico&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/main.css" />
+  <link rel="stylesheet" href="../css/navbar.css" />
+  <link rel="stylesheet" href="../css/menu.css" />
+</head>
+<body>
+
+  <div id="navbar-container"></div>
+
+  <section class="menu-section">
+    <h1>Our Delicious Menu</h1>
+
+    <!-- Filter Buttons -->
+    <div class="menu-filters">
+      <button onclick="filterProducts('all', event)" class="active">All</button>
+      <button onclick="filterProducts('cake', event)">Cakes</button>
+      <button onclick="filterProducts('pastry', event)">Pastries</button>
+      <button onclick="filterProducts('cookies', event)">Cookies</button>
+      <button onclick="filterProducts('bread', event)">Bread</button>
+      <button onclick="filterProducts('snack', event)">Snacks</button>
+    </div>
+
+    <!-- Product Grid -->
+    <div id="menuGrid" class="menu-grid"></div>
+  </section>
+
+  <div id="footer-container"></div>
+
+  <script src="../js/api.js"></script>
+  <script src="../js/authHelper.js"></script>
+  <script src="../js/component.js"></script>
+  <script src="../js/menu.js"></script>
+</body>
+</html>

@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Bakery 🧁</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Pacifico&family=Playfair+Display:wght@700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/main.css" />
+    <link rel="stylesheet" href="css/navbar.css" />
+  </head>
+  <body>
+    <!-- NAVBAR -->
+    <div id="navbar-container"></div>
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+      <div class="hero-content">
+        <h1>Welcome to My Bakery 🧁</h1>
+        <p>Freshly baked happiness every day!</p>
+        <a href="pages/menu.html" class="btn-primary">Explore Menu</a>
+      </div>
+    </section>
+
+    <!-- BANNER SLIDER -->
+    <div style="padding: 0 5%; box-sizing: border-box">
+      <section class="pro-banner-slider">
+        <div class="pro-slider" id="proSlider">
+          <div class="pro-slide" onclick="openProduct('cake')">
+            <img
+              src="assets/images/banner1.jpg"
+              alt="Cakes"
+              onerror="
+                this.src =
+                  'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=1200&q=80'
+              "
+            />
+          </div>
+          <div class="pro-slide" onclick="openProduct('pastry')">
+            <img
+              src="assets/images/banner2.jpg"
+              alt="Pastries"
+              onerror="
+                this.src =
+                  'https://images.unsplash.com/photo-1586985289688-ca3cf47d3e6e?w=1200&q=80'
+              "
+            />
+          </div>
+          <div class="pro-slide" onclick="openProduct('cookies')">
+            <img
+              src="assets/images/banner3.jpg"
+              alt="Cookies"
+              onerror="
+                this.src =
+                  'https://images.unsplash.com/photo-1499636136210-6f4ee915583e?w=1200&q=80'
+              "
+            />
+          </div>
+        </div>
+        <div class="pro-dots" id="proDots"></div>
+      </section>
+    </div>
+
+    <!-- ABOUT SECTION -->
+    <section class="about">
+      <h2>About Our Bakery 🍰</h2>
+      <p>
+        We bake delicious cakes, pastries, and breads using fresh ingredients.
+        Our mission is to bring sweetness and joy to every celebration.
+      </p>
+    </section>
+
+    <!-- FEATURED PRODUCTS -->
+    <section class="featured">
+      <h2>Our Special Items ⭐</h2>
+      <div class="card-grid">
+        <div class="card">
+          <img
+            src="assets/images/cake1.jpg"
+            alt="Cake"
+            onerror="
+              this.src =
+                'https://images.unsplash.com/photo-1606890737304-57a1ca8a5b62?w=400&q=80'
+            "
+          />
+          <h3>Chocolate Cake</h3>
+          <p>Rich, creamy, and delicious.</p>
+        </div>
+        <div class="card">
+          <img
+            src="assets/images/Strawbery_pastry.jpg"
+            alt="Pastry"
+            onerror="
+              this.src =
+                'https://images.unsplash.com/photo-1556040220-4096d522378d?w=400&q=80'
+            "
+          />
+          <h3>Strawberry Pastry</h3>
+          <p>Fresh and fruity delight.</p>
+        </div>
+        <div class="card">
+          <img
+            src="assets/images/wheat_bread.jpg"
+            alt="Bread"
+            onerror="
+              this.src =
+                'https://images.unsplash.com/photo-1549931319-a545dcf3bc73?w=400&q=80'
+            "
+          />
+          <h3>Fresh Bread</h3>
+          <p>Soft and baked daily.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section class="testimonials">
+      <h2>What Our Customers Say</h2>
+      <div class="carousel">
+        <input
+          type="radio"
+          name="carousel"
+          id="c1"
+          checked
+          class="carousel-nav"
+        />
+        <input type="radio" name="carousel" id="c2" class="carousel-nav" />
+        <input type="radio" name="carousel" id="c3" class="carousel-nav" />
+        <div class="carousel-inner">
+          <div class="testimonial">
+            <img
+              src="assets/images/customer5.jpg"
+              alt="Customer 1"
+              onerror="
+                this.src =
+                  'https://ui-avatars.com/api/?name=Gurdeep+Singh&background=d35400&color=fff&size=75'
+              "
+            />
+            <blockquote>
+              "Absolutely loved the Nankhatai! Crisp and flavorful."
+            </blockquote>
+            <cite>— Gurdeep Singh, Pune</cite>
+          </div>
+          <div class="testimonial">
+            <img
+              src="assets/images/customer2.jpg"
+              alt="Customer 2"
+              onerror="
+                this.src =
+                  'https://ui-avatars.com/api/?name=Aisha&background=d35400&color=fff&size=75'
+              "
+            />
+            <blockquote>
+              "Their Cake Rusk is the perfect partner with morning chai."
+            </blockquote>
+            <cite>— Aisha, Mumbai</cite>
+          </div>
+          <div class="testimonial">
+            <img
+              src="assets/images/customer3.jpg"
+              alt="Customer 3"
+              onerror="
+                this.src =
+                  'https://ui-avatars.com/api/?name=Rahul&background=d35400&color=fff&size=75'
+              "
+            />
+            <blockquote>
+              "Jeera Biscuits are savory perfection—great for anytime snacking."
+            </blockquote>
+            <cite>— Rahul, Shevgaon</cite>
+          </div>
+        </div>
+        <div class="carousel-controls">
+          <label for="c1"></label>
+          <label for="c2"></label>
+          <label for="c3"></label>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <div id="footer-container"></div>
+
+    <script src="js/api.js"></script>
+    <script src="js/authHelper.js"></script>
+    <script src="js/component.js"></script>
+    <script src="js/banner.js"></script>
+  </body>
+</html>

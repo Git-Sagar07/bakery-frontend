@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact Us - My Bakery</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Pacifico&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/main.css" />
+  <link rel="stylesheet" href="../css/navbar.css" />
+  <link rel="stylesheet" href="../css/contact.css" />
+</head>
+<body>
+
+  <div id="navbar-container"></div>
+
+  <!-- HERO -->
+  <section class="hero contact-hero">
+    <div class="hero-content">
+      <h1>Get in Touch 📞</h1>
+      <p>We'd love to hear from you!</p>
+    </div>
+  </section>
+
+  <!-- CONTACT INFO & FORM -->
+  <section class="contact-section">
+    <div class="contact-container">
+
+      <!-- Left: Contact Information -->
+      <div class="contact-info">
+        <h2>Visit Our Bakery</h2>
+        <p class="subtitle">Stop by for a sweet treat or give us a call!</p>
+
+        <div class="info-item">
+          <div class="icon">📍</div>
+          <div class="details">
+            <h3>Address</h3>
+            <p>123 Bakery Street<br>Shevgaon, Maharashtra 414502<br>India</p>
+          </div>
+        </div>
+
+        <div class="info-item">
+          <div class="icon">📞</div>
+          <div class="details">
+            <h3>Phone</h3>
+            <p>+91 98765 43210<br>+91 87654 32109</p>
+          </div>
+        </div>
+
+        <div class="info-item">
+          <div class="icon">✉️</div>
+          <div class="details">
+            <h3>Email</h3>
+            <p>info@mybakery.com<br>orders@mybakery.com</p>
+          </div>
+        </div>
+
+        <div class="info-item">
+          <div class="icon">🕐</div>
+          <div class="details">
+            <h3>Working Hours</h3>
+            <p>
+              Monday - Saturday: 7:00 AM - 9:00 PM<br>
+              Sunday: 8:00 AM - 8:00 PM
+            </p>
+          </div>
+        </div>
+
+        <div class="social-links">
+          <h3>Follow Us</h3>
+          <div class="social-icons">
+            <a href="#" class="social-icon">📘</a>
+            <a href="#" class="social-icon">📷</a>
+            <a href="#" class="social-icon">🐦</a>
+            <a href="#" class="social-icon">💬</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Contact Form -->
+      <div class="contact-form-wrapper">
+        <h2>Send Us a Message</h2>
+        <p class="subtitle">Have a question or special order? We're here to help!</p>
+
+        <form class="contact-form" id="contactForm">
+          <div class="form-group">
+            <label for="name">Your Name *</label>
+            <input type="text" id="name" name="name" placeholder="Enter your full name" required autocomplete="name" />
+            <span class="field-hint" id="nameHint"></span>
+          </div>
+          <div class="form-group">
+            <label for="email">Email Address *</label>
+            <input type="email" id="email" name="email" placeholder="your.email@example.com" required autocomplete="email" />
+            <span class="field-hint" id="emailHint"></span>
+          </div>
+          <div class="form-group">
+            <label for="phone">Phone Number <span style="color:#999;font-weight:400;">(optional)</span></label>
+            <input type="tel" id="phone" name="phone" placeholder="10-digit mobile number" maxlength="10" inputmode="numeric" />
+            <span class="field-hint" id="phoneHint"></span>
+          </div>
+          <div class="form-group">
+            <label for="subject">Subject *</label>
+            <select id="subject" name="subject" required>
+              <option value="">Select a subject</option>
+              <option value="general">General Inquiry</option>
+              <option value="order">Custom Order</option>
+              <option value="catering">Catering Services</option>
+              <option value="feedback">Feedback</option>
+              <option value="complaint">Complaint</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="message">Your Message *</label>
+            <textarea id="message" name="message" rows="6" placeholder="Tell us what's on your mind..." required></textarea>
+          </div>
+          <button type="submit" class="btn-submit">Send Message 🚀</button>
+        </form>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- MAP SECTION -->
+  <section class="map-section">
+    <h2>Find Us Here</h2>
+    <div class="map-container">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d30115.903872820585!2d75.2170562!3d19.348012!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bdb69c3f6929bf5%3A0x5d0bb5a98f5f3088!2sShevgaon%2C%20Maharashtra%20414502!5e0!3m2!1sen!2sin!4v1769946070604!5m2!1sen!2sin"
+        width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
+    </div>
+  </section>
+
+  <div id="footer-container"></div>
+
+  <script src="../js/api.js"></script>
+  <script src="../js/authHelper.js"></script>
+  <script src="../js/component.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      // Pre-fill if logged in
+      const user = getUser();
+      if (user) {
+        const nameEl  = document.getElementById("name");
+        const emailEl = document.getElementById("email");
+        const phoneEl = document.getElementById("phone");
+        if (nameEl  && user.name)  nameEl.value  = user.name;
+        if (emailEl && user.email) emailEl.value = user.email;
+        if (phoneEl && user.phone) phoneEl.value = user.phone;
+      }
+
+      // Live validation helpers
+      function markField(id, valid, msg) {
+        const input = document.getElementById(id);
+        const hint  = document.getElementById(id + "Hint");
+        if (!input) return;
+        input.style.borderColor = valid ? "#27ae60" : "#e74c3c";
+        if (hint) { hint.textContent = valid ? "" : msg; hint.style.color = "#e74c3c"; }
+      }
+
+      // Name: no digits, min 2 chars
+      const nameInput = document.getElementById("name");
+      if (nameInput) {
+        nameInput.addEventListener("input", function () {
+          this.value = this.value.replace(/[0-9]/g, "");
+          markField("name", this.value.trim().length >= 2, "Name must be at least 2 characters");
+        });
+      }
+
+      // Email: live format check
+      const emailInput = document.getElementById("email");
+      if (emailInput) {
+        emailInput.addEventListener("input", function () {
+          const ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.value.trim());
+          markField("email", ok || this.value === "", "Please enter a valid email address");
+        });
+      }
+
+      // Phone: digits only, max 10, starts 6-9
+      const phoneInput = document.getElementById("phone");
+      if (phoneInput) {
+        phoneInput.addEventListener("input", function () {
+          this.value = this.value.replace(/\D/g, "").slice(0, 10);
+          if (this.value.length > 0) {
+            markField("phone", /^[6-9]\d{9}$/.test(this.value), "Must be 10 digits starting with 6–9");
+          } else {
+            this.style.borderColor = "";
+            const hint = document.getElementById("phoneHint");
+            if (hint) hint.textContent = "";
+          }
+        });
+      }
+    });
+
+    document.getElementById("contactForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const name    = document.getElementById("name").value.trim();
+      const email   = document.getElementById("email").value.trim();
+      const phone   = document.getElementById("phone").value.trim();
+      const subject = document.getElementById("subject").value;
+      const message = document.getElementById("message").value.trim();
+
+      // Full validation on submit
+      if (!name || name.length < 2) {
+        toast("❌ Please enter your full name."); return;
+      }
+      if (/\d/.test(name)) {
+        toast("❌ Name should not contain numbers."); return;
+      }
+      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        toast("❌ Please enter a valid email address."); return;
+      }
+      if (phone && !/^[6-9]\d{9}$/.test(phone)) {
+        toast("❌ Phone must be 10 digits starting with 6–9."); return;
+      }
+      if (!subject) {
+        toast("❌ Please select a subject."); return;
+      }
+      if (!message || message.length < 10) {
+        toast("❌ Message must be at least 10 characters."); return;
+      }
+
+      toast(`✅ Thank you, ${name}! We'll get back to you within 24 hours.`, 5000);
+      document.getElementById("subject").value  = "";
+      document.getElementById("message").value  = "";
+      // Clear validation styles
+      ["name","email","phone","subject","message"].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.style.borderColor = "";
+      });
+    });
+
+    function toast(msg, duration) {
+      const existing = document.querySelector(".notification");
+      if (existing) existing.remove();
+      const n = document.createElement("div");
+      n.className = "notification";
+      n.textContent = msg;
+      document.body.appendChild(n);
+      setTimeout(() => n.classList.add("show"), 100);
+      setTimeout(() => { n.classList.remove("show"); setTimeout(() => n.remove(), 300); }, duration || 3500);
+    }
+  </script>
+<script>
+// Contact form → API
+document.addEventListener("DOMContentLoaded", () => {
+  const form = document.querySelector(".contact-form");
+  if (form) form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const name    = document.getElementById("contactName")?.value.trim() || e.target.querySelector("[name=name]")?.value.trim() || "";
+    const email   = document.getElementById("contactEmail")?.value.trim() || e.target.querySelector("[name=email]")?.value.trim() || "";
+    const subject = document.getElementById("contactSubject")?.value.trim() || "";
+    const message = document.getElementById("contactMessage")?.value.trim() || e.target.querySelector("textarea")?.value.trim() || "";
+    const btn = form.querySelector(".btn-submit");
+    if (btn) { btn.disabled = true; btn.textContent = "Sending..."; }
+    const res = await api.post("/contact", { name, email, subject, message });
+    if (btn) { btn.disabled = false; btn.textContent = "Send Message 📨"; }
+    const n = document.createElement("div");
+    n.className = "notification";
+    n.textContent = res?.message || (res?.success ? "Message sent! ✅" : "Could not send message. ❌");
+    document.body.appendChild(n);
+    setTimeout(() => n.classList.add("show"), 100);
+    setTimeout(() => { n.classList.remove("show"); setTimeout(() => n.remove(), 300); }, 4000);
+    if (res?.success) form.reset();
+  });
+});
+</script>
+</body>
+</html>

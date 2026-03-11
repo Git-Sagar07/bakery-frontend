@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login - My Bakery</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Pacifico&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/main.css" />
+  <link rel="stylesheet" href="../css/navbar.css" />
+  <link rel="stylesheet" href="../css/auth.css" />
+</head>
+<body data-page="auth">
+
+  <div id="navbar-container"></div>
+
+  <section class="auth-section">
+    <div class="auth-container">
+      <div class="auth-card">
+        <h1>Welcome Back! 👋</h1>
+        <p class="auth-subtitle">Login to your account</p>
+
+        <form class="auth-form" onsubmit="event.preventDefault(); login();">
+          <div class="form-group">
+            <label for="loginEmail">Email Address</label>
+            <input type="email" id="loginEmail" placeholder="your.email@example.com" required autocomplete="email" />
+          </div>
+          <div class="form-group">
+            <label for="loginPassword">Password</label>
+            <div class="password-wrap">
+              <input type="password" id="loginPassword" placeholder="Enter your password" required autocomplete="current-password" />
+              <button type="button" class="toggle-pwd" onclick="togglePwd('loginPassword', this)" aria-label="Show password">👁</button>
+            </div>
+          </div>
+          <div style="text-align:right;margin-top:-10px;margin-bottom:16px;">
+            <a href="forgot-password.html" style="font-size:0.88rem;color:#d35400;text-decoration:none;font-weight:500;">Forgot Password?</a>
+          </div>
+          <button type="submit" class="btn-auth">Login 🔐</button>
+        </form>
+
+        <p class="auth-footer">
+          Don't have an account?
+          <a href="signup.html">Sign Up</a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <script src="../js/api.js"></script>
+  <script src="../js/authHelper.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/component.js"></script>
+  <script>
+    function togglePwd(id, btn) {
+      const inp = document.getElementById(id);
+      inp.type = inp.type === "password" ? "text" : "password";
+      btn.textContent = inp.type === "password" ? "👁" : "🙈";
+    }
+
+    // Show message if redirected after password change
+    document.addEventListener("DOMContentLoaded", () => {
+      if (sessionStorage.getItem("pwdChanged") === "1") {
+        sessionStorage.removeItem("pwdChanged");
+        // Reuse showAuthSuccess once auth.js is loaded
+        setTimeout(() => {
+          showAuthSuccess("Password changed successfully! Please login with your new password.");
+        }, 200);
+      }
+    });
+  </script>
+</body>
+</html>

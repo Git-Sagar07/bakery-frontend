@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Cart - My Bakery</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Pacifico&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/main.css" />
+  <link rel="stylesheet" href="../css/navbar.css" />
+  <link rel="stylesheet" href="../css/cart.css" />
+</head>
+<body>
+
+  <div id="navbar-container"></div>
+
+  <section class="cart-section">
+    <div class="cart-wrapper">
+
+      <!-- PAGE HEADER -->
+      <div class="cart-header">
+        <h1>My Cart 🛒</h1>
+        <p class="cart-header-sub" id="cartCountText">0 items in your cart</p>
+      </div>
+
+      <!-- EMPTY CART STATE -->
+      <div id="emptyCart" class="empty-cart">
+        <div class="empty-icon">🛒</div>
+        <h2>Your cart is empty!</h2>
+        <p>Looks like you haven't added anything yet.</p>
+        <a href="menu.html" class="btn-primary">Browse Menu 🧁</a>
+      </div>
+
+      <!-- CART CONTENT -->
+      <div id="cartContent" class="cart-content" style="display: none;">
+
+        <div class="cart-left">
+
+          <!-- DELIVERY ADDRESS -->
+          <div class="cart-card" id="addressSection">
+            <div class="card-title">
+              <span class="card-icon">📍</span>
+              <h2>Delivery Address</h2>
+            </div>
+
+            <!-- Saved address view -->
+            <div id="savedAddress" style="display: none;">
+              <div class="address-display">
+                <p id="addressText"></p>
+                <button class="btn-edit" onclick="toggleAddressForm(true)">Edit ✏️</button>
+              </div>
+            </div>
+
+            <!-- Address form -->
+            <div id="addressForm">
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Full Name *</label>
+                  <input type="text" id="addrName" placeholder="Your full name" />
+                </div>
+                <div class="form-group">
+                  <label>Phone Number *</label>
+                  <input type="tel" id="addrPhone" placeholder="10-digit mobile number" maxlength="10" inputmode="numeric" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Street Address *</label>
+                <input type="text" id="addrStreet" placeholder="House no., Street, Area" />
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label>City *</label>
+                  <input type="text" id="addrCity" placeholder="Pune" />
+                </div>
+                <div class="form-group">
+                  <label>Pincode *</label>
+                  <input type="text" id="addrPin" placeholder="6-digit pincode" maxlength="6" inputmode="numeric" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Landmark (Optional)</label>
+                <input type="text" id="addrLandmark" placeholder="Near bakery, opposite school..." />
+              </div>
+              <button class="btn-save-address" onclick="saveAddress()">Save Address 📍</button>
+            </div>
+          </div>
+
+          <!-- CART ITEMS -->
+          <div class="cart-card">
+            <div class="card-title">
+              <span class="card-icon">🧁</span>
+              <h2>Order Items</h2>
+              <button class="btn-clear-cart" onclick="clearCart()">Clear All 🗑️</button>
+            </div>
+            <div id="cartItemsList"></div>
+          </div>
+
+        </div>
+
+        <!-- BILLING SECTION -->
+        <div class="cart-right">
+          <div class="cart-card billing-card">
+            <div class="card-title">
+              <span class="card-icon">💰</span>
+              <h2>Bill Summary</h2>
+            </div>
+
+            <div class="billing-details">
+              <div class="billing-row">
+                <span>Items Total</span>
+                <span id="itemsTotal">₹0</span>
+              </div>
+              <div class="billing-row">
+                <span>Delivery Charge</span>
+                <span id="deliveryCharge">₹0</span>
+              </div>
+              <div class="billing-row discount-row" id="discountRow" style="display:none;">
+                <span>Discount 🎉</span>
+                <span id="discountAmount" class="discount-value">-₹0</span>
+              </div>
+              <div class="billing-row tax-row">
+                <span>GST (5%)</span>
+                <span id="gstAmount">₹0</span>
+              </div>
+              <div class="billing-divider"></div>
+              <div class="billing-row total-row">
+                <span>Total Amount</span>
+                <span id="grandTotal">₹0</span>
+              </div>
+            </div>
+
+            <!-- Coupon Section -->
+            <div class="coupon-section">
+              <p class="coupon-label">🏷️ Have a coupon?</p>
+              <div class="coupon-input-row">
+                <input type="text" id="couponInput" placeholder="SWEET10 / BAKERY20 / FIRST15" />
+                <button onclick="applyCoupon()">Apply</button>
+              </div>
+              <p id="couponMsg" class="coupon-msg"></p>
+            </div>
+
+            <!-- Delivery Info -->
+            <div class="delivery-info">
+              <div class="delivery-info-item">
+                <span>🕐</span>
+                <span>Estimated Delivery: <strong>30-45 mins</strong></span>
+              </div>
+              <div class="delivery-info-item">
+                <span>🆓</span>
+                <span>Free delivery on orders above <strong>₹499</strong></span>
+              </div>
+            </div>
+
+            <!-- Place Order Button -->
+            <button class="btn-place-order" onclick="placeOrder()" id="placeOrderBtn">
+              Place Order 🎉
+            </button>
+
+            <!-- Payment Methods -->
+            <div class="payment-methods">
+              <p>Secure Payment via</p>
+              <div class="payment-icons">
+                <span class="payment-badge">💵 Cash on Delivery</span>
+                <span class="payment-badge">📱 UPI</span>
+                <span class="payment-badge">💳 Card</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- SAVINGS BADGE -->
+          <div class="savings-badge" id="savingsBadge" style="display:none;">
+            <span>🎊 You're saving </span>
+            <strong id="savingsAmount">₹0</strong>
+            <span> on this order!</span>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ORDER SUCCESS MODAL -->
+  <div id="orderModal" class="modal-overlay" style="display:none;">
+    <div class="modal-box">
+      <div class="modal-icon">🎉</div>
+      <h2>Order Placed!</h2>
+      <p>Thank you for your order! Your delicious treats are being prepared.</p>
+      <p class="order-id">Order ID: <strong id="orderIdText"></strong></p>
+      <p class="delivery-time">⏱️ Estimated delivery: <strong>30–45 minutes</strong></p>
+      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:10px;">
+        <button class="btn-primary" onclick="closeModal()">📦 View My Order</button>
+        <button class="btn-secondary-modal" onclick="continueShopping()">🛍️ Continue Shopping</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="footer-container"></div>
+
+  <script src="../js/api.js"></script>
+  <script src="../js/authHelper.js"></script>
+  <script src="../js/component.js"></script>
+  <script src="../js/cart.js"></script>
+</body>
+</html>

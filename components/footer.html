@@ -1,0 +1,37 @@
+<footer class="footer cta-footer">
+  <h2>Get fresh baked goodness delivered! 🍞</h2>
+  <p>Subscribe to our newsletter for special offers, new arrivals, and baking tips.</p>
+
+  <form class="newsletter-form" onsubmit="handleNewsletter(event)">
+    <input type="email" placeholder="Your email address" required />
+    <button type="submit">Subscribe</button>
+  </form>
+
+  <div class="footer-links">
+    <a href="/index.html">Home</a>
+    <a href="/pages/menu.html">Menu</a>
+    <a href="/pages/about.html">About</a>
+    <a href="/pages/contact.html">Contact</a>
+  </div>
+
+  <p class="copyright">© 2026 My Bakery | All Rights Reserved ❤️ Made in Shevgaon</p>
+</footer>
+
+<script>
+async function handleNewsletter(e) {
+  e.preventDefault();
+  const email = e.target.querySelector("input").value.trim();
+  const res   = typeof api !== "undefined"
+    ? await api.post("/newsletter", { email })
+    : null;
+
+  const msg = res?.message || "✅ Subscribed! Thanks for joining us.";
+  const n   = document.createElement("div");
+  n.className   = "notification";
+  n.textContent = msg;
+  document.body.appendChild(n);
+  setTimeout(() => n.classList.add("show"), 100);
+  setTimeout(() => { n.classList.remove("show"); setTimeout(() => n.remove(), 300); }, 3500);
+  e.target.reset();
+}
+</script>
