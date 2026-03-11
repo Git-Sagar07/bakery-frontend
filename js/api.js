@@ -27,13 +27,9 @@ async function apiFetch(endpoint, options = {}) {
     const data = await res.json();
 
     // Session expired → redirect to login
-    if (res.status === 401 && !endpoint.includes("/auth/")) {
-      window._currentUser = null;
-      localStorage.removeItem("user");
-      showNotificationGlobal("Session expired. Please login again. 🔐");
-      setTimeout(() => { window.location.href = "/pages/login.html"; }, 1400);
-      return null;
-    }
+   if (res.status === 401) {
+  return { ok: false, status: 401, success: false };
+}
 
     return { ok: res.ok, status: res.status, ...data };
   } catch (err) {
