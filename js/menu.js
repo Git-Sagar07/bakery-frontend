@@ -67,12 +67,15 @@ function displayProducts(productsToDisplay) {
     return `
       <div class="menu-card" data-category="${product.category}" id="card-${product.id}">
         <div class="card-image">
-          <img src="${product.image}" alt="${product.name}"
+          <img src="${product.image}" alt="${product.name}" loading="lazy"
             onerror="this.src='https://images.unsplash.com/photo-1586985289688-ca3cf47d3e6e?w=400&q=80'" />
           <button class="favorite-btn ${isFav ? "favorite-active" : ""}"
             onclick='toggleFavorite("${product.id}")'
             title="${isFav ? "Remove from favorites" : "Add to favorites"}"
           >${isFav ? "❤️" : "🤍"}</button>
+          <div class="card-quick-add" onclick='addToCart("${product.id}")'>
+            <span>+ Quick Add</span>
+          </div>
         </div>
         <div class="card-content">
           <h3>${product.name}</h3>
