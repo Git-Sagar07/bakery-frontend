@@ -250,25 +250,8 @@ function applyCoupon() {
 // ── Place Order ──────────────────────────────────────────────
 async function placeOrder() {
   if (currentCart.length === 0) { showNotification("Your cart is empty! 🛒"); return; }
-
-  const btn = document.getElementById("placeOrderBtn");
-  btn.disabled    = true;
-  btn.textContent = "Placing Order... ⏳";
-
-  const res = await api.post("/orders", { couponCode: appliedCoupon });
-
-  btn.disabled    = false;
-  btn.textContent = "Place Order 🎉";
-
-  if (res && res.success) {
-    currentCart   = [];
-    appliedCoupon = null;
-    updateNavCartCount();
-    document.getElementById("orderIdText").textContent   = res.orderId;
-    document.getElementById("orderModal").style.display  = "flex";
-  } else {
-    showNotification(res?.message || "Could not place order. Please try again. ❌");
-  }
+  // Redirect to checkout page — payment & order creation happens there
+  window.location.href = "checkout.html";
 }
 
 function closeModal() {

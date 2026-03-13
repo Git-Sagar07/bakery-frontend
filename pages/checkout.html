@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Checkout – My Bakery</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/main.css" />
+  <link rel="stylesheet" href="../css/navbar.css" />
+  <link rel="stylesheet" href="../css/checkout.css" />
+</head>
+<body>
+
+  <div id="navbar-container"></div>
+
+  <section class="checkout-section">
+    <div class="checkout-header">
+      <h1>Checkout</h1>
+      <p>Review your order and complete payment securely</p>
+    </div>
+
+    <div class="checkout-grid">
+
+      <!-- LEFT: Order Summary -->
+      <div class="checkout-summary-card">
+        <h2 class="card-title">📦 Order Summary</h2>
+        <div id="checkoutItemsList" class="checkout-items-list">
+          <div class="loading-shimmer"></div>
+        </div>
+
+        <div class="checkout-totals" id="checkoutTotals" style="display:none;">
+          <div class="total-row"><span>Subtotal</span><span id="co-subtotal">₹0</span></div>
+          <div class="total-row"><span>Delivery</span><span id="co-delivery">₹0</span></div>
+          <div class="total-row"><span>GST (5%)</span><span id="co-gst">₹0</span></div>
+          <div class="total-row discount-row" id="co-discountRow" style="display:none;">
+            <span>Discount</span><span id="co-discount" class="discount-val">-₹0</span>
+          </div>
+          <div class="total-row grand-total-row">
+            <span>Total</span><span id="co-total">₹0</span>
+          </div>
+        </div>
+
+        <!-- Coupon -->
+        <div class="coupon-section">
+          <div class="coupon-input-row">
+            <input type="text" id="coCouponInput" placeholder="Coupon code" maxlength="12" />
+            <button onclick="applyCoupon()">Apply</button>
+          </div>
+          <p id="coCouponMsg" class="coupon-msg"></p>
+        </div>
+      </div>
+
+      <!-- RIGHT: Payment + Address -->
+      <div class="checkout-right">
+
+        <!-- Delivery Address -->
+        <div class="checkout-card">
+          <h2 class="card-title">📍 Delivery Address</h2>
+          <div id="addressDisplay" class="address-display">Loading...</div>
+          <button class="btn-edit-address" onclick="toggleAddressEdit()">✏️ Edit Address</button>
+          <div id="addressEditForm" class="address-edit-form" style="display:none;">
+            <div class="form-row">
+              <input type="text"  id="addrName"     placeholder="Full Name *" />
+              <input type="tel"   id="addrPhone"    placeholder="Phone *" maxlength="10" />
+            </div>
+            <input type="text"  id="addrStreet"   placeholder="Street / Flat / Building *" />
+            <div class="form-row">
+              <input type="text"  id="addrCity"     placeholder="City *" />
+              <input type="text"  id="addrPin"      placeholder="Pincode *" maxlength="6" />
+            </div>
+            <input type="text"  id="addrLandmark" placeholder="Landmark (optional)" />
+            <button class="btn-save-addr" onclick="saveAddressFromCheckout()">Save Address</button>
+          </div>
+        </div>
+
+        <!-- Payment Method -->
+        <div class="checkout-card">
+          <h2 class="card-title">💳 Payment Method</h2>
+          <div class="payment-options">
+            <label class="payment-option selected" id="opt-razorpay">
+              <input type="radio" name="payMethod" value="razorpay" checked />
+              <div class="pay-opt-icon">🔐</div>
+              <div>
+                <strong>Pay Online</strong>
+                <p>UPI · Cards · Net Banking · Wallets</p>
+              </div>
+              <div class="pay-opt-badge">Secure</div>
+            </label>
+            <label class="payment-option" id="opt-cod">
+              <input type="radio" name="payMethod" value="cod" />
+              <div class="pay-opt-icon">💵</div>
+              <div>
+                <strong>Cash on Delivery</strong>
+                <p>Pay when your order arrives</p>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <!-- Pay Button -->
+        <button class="btn-pay" id="payBtn" onclick="initiatePayment()">
+          <span id="payBtnText">Pay Now 🔐</span>
+        </button>
+
+        <p class="secure-note">🔒 256-bit SSL secured · Powered by Razorpay</p>
+      </div>
+    </div>
+  </section>
+
+  <div id="footer-container"></div>
+
+  <!-- Razorpay SDK -->
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+  <script src="../js/api.js"></script>
+  <script src="../js/authHelper.js"></script>
+  <script src="../js/component.js"></script>
+  <script src="../js/checkout.js"></script>
+</body>
+</html>
