@@ -5,10 +5,9 @@
 // ============================================================
 
 // ── Backend URL — dev uses localhost, production uses Render ──
-const API_BASE =
- location.hostname === "localhost"
- ? "http://localhost:5000/api"
- : "https://bakery-backend-v2-c7d2.onrender.com/api";
+const API_BASE = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
+  ? "http://localhost:5000/api"
+  : "https://bakery-backend-v2-c7d2.onrender.com/api";
 // ─────────────────────────────────────────────────────────────
 
 // ── Core fetch wrapper ────────────────────────────────────────
