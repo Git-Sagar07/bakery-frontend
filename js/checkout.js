@@ -43,7 +43,7 @@ async function loadCheckoutSummary() {
   listEl.innerHTML = cart.map(item => `
     <div class="co-item">
       <img class="co-item-img" src="${item.image}" alt="${item.name}"
-        onerror="this.src='https://images.unsplash.com/photo-1586985289688-ca3cf47d3e6e?w=80&q=80'" />
+        onerror="this.style.background='#fdebd0'" />
       <div class="co-item-info">
         <strong>${item.name}</strong>
         <span>${item.unit} × ${item.quantity}</span>

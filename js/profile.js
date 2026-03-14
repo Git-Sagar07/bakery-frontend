@@ -92,7 +92,7 @@ async function loadFavorites() {
     <div class="favorite-card">
       <div class="favorite-image">
         <img src="${product.image}" alt="${product.name}"
-          onerror="this.src='https://images.unsplash.com/photo-1586985289688-ca3cf47d3e6e?w=300&q=80'" />
+          onerror="this.style.background='#fdebd0'" />
         <button class="remove-favorite-btn" onclick='removeFavorite("${product.id}")' title="Remove">❌</button>
       </div>
       <div class="favorite-content">
@@ -129,7 +129,7 @@ function renderOrderCard(order, showCancel) {
         ${order.items.map(item => `
           <div class="order-item-row">
             <img src="${item.image}" alt="${item.name}" class="order-item-thumb"
-              onerror="this.src='https://images.unsplash.com/photo-1586985289688-ca3cf47d3e6e?w=48&q=80'" />
+              onerror="this.style.background='#fdebd0'" />
             <span class="order-item-name">${item.name}</span>
             <span class="order-item-qty">× ${item.quantity}</span>
             <span class="order-item-price">₹${item.price * item.quantity}</span>

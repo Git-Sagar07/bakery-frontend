@@ -85,6 +85,17 @@ async function login() {
     window._currentUser = res.user;
     showAuthSuccess("Login successful! Redirecting...");
     setTimeout(() => { window.location.href = "/index.html"; }, 900);
+  } else if (res?.code === "NO_ACCOUNT") {
+    // Account doesn't exist — show message with signup link
+    _setAuthMsg(
+      `❌ No account found for this email. <a href="signup.html" style="color:#d35400;font-weight:700;text-decoration:underline;">Sign up here →</a>`,
+      "#fff0f0", "#d32f2f", true
+    );
+  } else if (res?.code === "WRONG_PASSWORD") {
+    _setAuthMsg(
+      `❌ Incorrect password. <a href="forgot-password.html" style="color:#d35400;font-weight:700;text-decoration:underline;">Forgot password?</a>`,
+      "#fff0f0", "#d32f2f", true
+    );
   } else {
     showAuthError(res?.message || "Login failed. Please try again.");
   }
@@ -126,15 +137,7 @@ async function signup() {
   }
 }
 
-// ── FORGOT PASSWORD ─────────────────────────────────────────
-async function forgotPassword() {
-  const email = document.getElementById("forgotEmail").value.trim();
-  if (!email) { showAuthError("Please enter your registered email."); return; }
-  if (!isValidEmail(email)) { showAuthError("Please enter a valid email address."); return; }
-
-  // Always show same message (security: don't reveal if email exists)
-  showAuthSuccess("If this email is registered, reset instructions have been sent.");
-}
+// forgot-password logic lives in forgot-password.html inline script
 
 // ── HELPERS ─────────────────────────────────────────────────
 function showAuthError(msg) {
@@ -143,7 +146,7 @@ function showAuthError(msg) {
 function showAuthSuccess(msg) {
   _setAuthMsg("✅ " + msg, "#f0fff4", "#27ae60");
 }
-function _setAuthMsg(text, bg, color) {
+function _setAuthMsg(text, bg, color, isHtml = false) {
   let el = document.getElementById("authMsg");
   if (!el) {
     el = document.createElement("p");
@@ -152,7 +155,7 @@ function _setAuthMsg(text, bg, color) {
     const parent = document.querySelector(".auth-form") || document.querySelector(".auth-card");
     if (parent) parent.appendChild(el);
   }
-  el.textContent = text;
+  if (isHtml) { el.innerHTML = text; } else { el.textContent = text; }
   el.style.background = bg;
   el.style.color = color;
 }

@@ -54,7 +54,7 @@ function renderCartItems(cart) {
   list.innerHTML = cart.map(item => `
     <div class="cart-item" id="item-${item.id}">
       <img src="${item.image}" alt="${item.name}" class="cart-item-img"
-        onerror="this.src='https://images.unsplash.com/photo-1586985289688-ca3cf47d3e6e?w=80&q=80'" />
+        onerror="this.style.background='#fdebd0'" />
       <div class="cart-item-details">
         <h3>${item.name}</h3>
         <p class="cart-item-unit">${item.unit}</p>

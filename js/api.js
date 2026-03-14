@@ -4,10 +4,21 @@
 //  Cookies are sent automatically (credentials: "include")
 // ============================================================
 
-// ── Backend URL — dev uses localhost, production uses Render ──
-const API_BASE = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
-  ? "http://localhost:5000/api"
-  : "https://bakery-backend-v2-c7d2.onrender.com/api";
+// ── Backend URL ──────────────────────────────────────────────
+const RENDER_API  = "https://bakery-backend-v2-c7d2.onrender.com/api";
+const LOCAL_API   = "http://localhost:5000/api";
+const IS_LOCAL    = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
+
+// On localhost: try local backend first, fall back to Render if refused
+// On Netlify / any other host: always use Render
+let API_BASE = IS_LOCAL ? LOCAL_API : RENDER_API;
+
+// Wake up Render backend (free tier sleeps after inactivity)
+// Silent ping — errors are intentionally swallowed
+(function wakeBackend() {
+  fetch(RENDER_API.replace("/api", ""), { method: "GET", mode: "no-cors" })
+    .catch(() => {});
+})();
 // ─────────────────────────────────────────────────────────────
 
 // ── Core fetch wrapper ────────────────────────────────────────
@@ -23,18 +34,34 @@ async function apiFetch(endpoint, options = {}) {
   }
 
   try {
-    const res  = await fetch(`${API_BASE}${endpoint}`, config);
+    let res;
+    try {
+      res = await fetch(`${API_BASE}${endpoint}`, config);
+    } catch (connErr) {
+      // Local backend refused connection — silently fall back to Render
+      if (IS_LOCAL && API_BASE === LOCAL_API) {
+        API_BASE = RENDER_API;
+        res = await fetch(`${API_BASE}${endpoint}`, config);
+      } else {
+        throw connErr;
+      }
+    }
+
     const data = await res.json();
 
-    // Session expired → redirect to login
-   if (res.status === 401) {
-  return { ok: false, status: 401, success: false };
-}
+    // 401 — pass server message through (wrong password, etc.)
+    // Only redirect for non-auth endpoints (not login/signup which expect 401 on bad creds)
+    if (res.status === 401) {
+      const isAuthEndpoint = endpoint.includes("/auth/login") || endpoint.includes("/auth/signup");
+      if (!isAuthEndpoint) {
+        return { ok: false, status: 401, success: false, message: data?.message || "Session expired." };
+      }
+    }
 
     return { ok: res.ok, status: res.status, ...data };
   } catch (err) {
     console.error(`API error (${endpoint}):`, err);
-    return { ok: false, success: false, message: "Network error. Is the server running?" };
+    return { ok: false, success: false, message: "Network error. Check your connection." };
   }
 }
 
