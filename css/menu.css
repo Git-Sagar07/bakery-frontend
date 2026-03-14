@@ -19,20 +19,22 @@
    STICKY FILTER BAR
 ========================= */
 
-/* Full-width sticky wrapper — blurs behind it as page scrolls */
+/* Full-width sticky filter bar — locks just below navbar */
 .menu-filters-sticky {
   position: sticky;
-  top: 70px;           /* exact navbar height */
-  z-index: 200;
-  /* edge-to-edge bleed so blur fills the full width */
+  top: 70px;           /* matches navbar height exactly */
+  z-index: 400;        /* above everything */
+  left: 0;
+  right: 0;
   margin-left: -10%;
   margin-right: -10%;
-  padding: 14px 10%;
-  background: rgba(255, 250, 245, 0.88);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border-bottom: 1px solid rgba(211, 84, 0, 0.08);
-  margin-bottom: 36px;
+  padding: 12px 10%;
+  background: rgba(255, 250, 245, 0.96);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 2px solid rgba(211, 84, 0, 0.10);
+  box-shadow: 0 4px 20px rgba(211, 84, 0, 0.08);
+  margin-bottom: 32px;
 }
 
 /* Inner pill row — centered, wraps on small screens */
