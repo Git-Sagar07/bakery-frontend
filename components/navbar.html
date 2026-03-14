@@ -36,39 +36,3 @@
     <span></span><span></span><span></span>
   </button>
 </header>
-
-<script>
-(function() {
-  var hamburger = document.getElementById('navHamburger');
-  var menu      = document.getElementById('navMenu');
-
-  hamburger.addEventListener('click', function() {
-    var isOpen = menu.classList.toggle('open');
-    this.classList.toggle('open', isOpen);
-
-    // On mobile: inject auth/user links into the dropdown
-    var mobileAuth  = document.getElementById('navMobileAuth');
-    var authLinks   = document.getElementById('auth-links');
-    var userInfo    = document.getElementById('user-info');
-
-    if (isOpen && mobileAuth) {
-      if (userInfo && userInfo.children.length > 0) {
-        mobileAuth.innerHTML = userInfo.innerHTML;
-      } else if (authLinks && authLinks.children.length > 0) {
-        mobileAuth.innerHTML = authLinks.innerHTML;
-      }
-      mobileAuth.style.display = 'flex';
-    } else if (mobileAuth) {
-      mobileAuth.style.display = 'none';
-    }
-  });
-
-  // Close menu when a link is clicked
-  menu.addEventListener('click', function(e) {
-    if (e.target.tagName === 'A' || e.target.tagName === 'BUTTON') {
-      menu.classList.remove('open');
-      hamburger.classList.remove('open');
-    }
-  });
-})();
-</script>

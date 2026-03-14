@@ -28,6 +28,7 @@ async function loadComponent(name, file, containerId) {
     if (name === "navbar") {
       updateNavbar();
       highlightActiveLink();
+      initHamburger();
     }
   } catch (err) {
     console.error(`Error loading ${name}:`, err);
@@ -82,6 +83,54 @@ function highlightActiveLink() {
   document.querySelectorAll(".nav-menu a").forEach(link => {
     if (link.getAttribute("href").split("/").pop() === currentPage) {
       link.classList.add("active-link");
+    }
+  });
+}
+
+// ── Hamburger mobile menu ─────────────────────────────────────
+function initHamburger() {
+  const hamburger = document.getElementById("navHamburger");
+  const menu      = document.getElementById("navMenu");
+  if (!hamburger || !menu) return;
+
+  // Toggle open/close on hamburger click
+  hamburger.addEventListener("click", function (e) {
+    e.stopPropagation();
+    const isOpen = menu.classList.toggle("open");
+    hamburger.classList.toggle("open", isOpen);
+
+    // Inject auth links into mobile dropdown
+    const mobileAuth = document.getElementById("navMobileAuth");
+    const authLinks  = document.getElementById("auth-links");
+    const userInfo   = document.getElementById("user-info");
+    if (mobileAuth) {
+      if (isOpen) {
+        if (userInfo && userInfo.innerHTML.trim()) {
+          mobileAuth.innerHTML = userInfo.innerHTML;
+        } else if (authLinks && authLinks.innerHTML.trim()) {
+          mobileAuth.innerHTML = authLinks.innerHTML;
+        }
+        mobileAuth.style.display = "flex";
+      } else {
+        mobileAuth.style.display = "none";
+      }
+    }
+  });
+
+  // Close when a link inside menu is clicked
+  menu.addEventListener("click", function (e) {
+    if (e.target.tagName === "A" || e.target.closest("a")) {
+      menu.classList.remove("open");
+      hamburger.classList.remove("open");
+    }
+  });
+
+  // Close when clicking anywhere outside the navbar
+  document.addEventListener("click", function (e) {
+    const header = document.querySelector(".nav-header");
+    if (header && !header.contains(e.target)) {
+      menu.classList.remove("open");
+      hamburger.classList.remove("open");
     }
   });
 }

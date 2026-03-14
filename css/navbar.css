@@ -171,15 +171,19 @@
 
 .nav-hamburger span {
   display: block;
-  width: 22px;
-  height: 2px;
-  background: #444;
-  border-radius: 2px;
-  transition: 0.3s ease;
+  width: 24px;
+  height: 2.5px;
+  background: #d35400;
+  border-radius: 3px;
+  transition: transform 0.35s cubic-bezier(0.4,0,0.2,1),
+              opacity   0.25s ease,
+              background 0.2s ease;
+  transform-origin: center;
 }
-.nav-hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 4px); }
-.nav-hamburger.open span:nth-child(2) { opacity: 0; }
-.nav-hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -4px); }
+/* ☰ → ✕ animation */
+.nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
 /* ── Mobile ── */
 @media (max-width: 768px) {
@@ -192,21 +196,34 @@
   .nav-header { position: relative; }
 
   .nav-menu {
-    display: none;
+    display: flex;               /* always flex — visibility via max-height */
+    flex-direction: column;
+    align-items: stretch;
     position: absolute;
     top: 70px;
     left: 0;
     right: 0;
     background: white;
-    flex-direction: column;
-    align-items: stretch;
-    padding: 10px 5% 16px;
+    padding: 0 5%;               /* padding animates with content */
     box-shadow: 0 10px 30px rgba(0,0,0,0.12);
     gap: 2px;
     z-index: 999;
-    border-top: 1px solid #f5ede6;
+    border-top: 2px solid #f5ede6;
+    /* Slide animation */
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(-8px);
+    transition: max-height 0.35s ease, opacity 0.3s ease, transform 0.3s ease, padding 0.3s ease;
+    pointer-events: none;
   }
-  .nav-menu.open { display: flex; }
+  .nav-menu.open {
+    max-height: 500px;           /* large enough for all links */
+    opacity: 1;
+    transform: translateY(0);
+    padding: 10px 5% 16px;
+    pointer-events: all;
+  }
 
   .nav-menu > a {
     padding: 12px 14px;
