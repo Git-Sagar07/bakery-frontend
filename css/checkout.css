@@ -393,3 +393,39 @@
   .form-row { grid-template-columns: 1fr; }
   .checkout-summary-card, .checkout-card { padding: 20px; }
 }
+
+/* =========================
+   DELIVERY SLOT
+========================= */
+.slot-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.slot-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 12px 8px;
+  border: 2px solid #ffd7c2;
+  border-radius: 14px;
+  background: white;
+  cursor: pointer;
+  font-family: "Poppins", sans-serif;
+  transition: all 0.2s ease;
+}
+
+.slot-btn:hover { border-color: #d35400; background: #fff8f3; }
+
+.slot-btn.active {
+  border-color: #d35400;
+  background: #fff3e8;
+  box-shadow: 0 0 0 3px rgba(211,84,0,0.12);
+}
+
+.slot-icon { font-size: 1.4rem; }
+.slot-btn strong { font-size: 0.82rem; color: #222; }
+.slot-btn small  { font-size: 0.72rem; color: #999; }
+.slot-btn.active strong { color: #d35400; }

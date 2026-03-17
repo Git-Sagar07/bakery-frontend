@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Panel — My Bakery</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: "Poppins", sans-serif; background: #f8f4f0; color: #222; min-height: 100vh; }
+
+    /* ── Login Screen ── */
+    #loginScreen {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #d35400 0%, #e67e22 100%);
+    }
+    .login-box {
+      background: white;
+      border-radius: 20px;
+      padding: 40px;
+      width: 360px;
+      text-align: center;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+    }
+    .login-box .logo { font-size: 3rem; margin-bottom: 8px; }
+    .login-box h1 { font-size: 1.4rem; color: #d35400; margin-bottom: 6px; }
+    .login-box p  { color: #888; font-size: 0.85rem; margin-bottom: 24px; }
+    .login-box input {
+      width: 100%; padding: 12px 16px;
+      border: 2px solid #ffd7c2; border-radius: 12px;
+      font-family: "Poppins", sans-serif; font-size: 0.9rem;
+      outline: none; margin-bottom: 12px;
+    }
+    .login-box input:focus { border-color: #d35400; }
+    .login-box button {
+      width: 100%; padding: 13px;
+      background: linear-gradient(135deg, #d35400, #e67e22);
+      color: white; border: none; border-radius: 12px;
+      font-family: "Poppins", sans-serif; font-size: 1rem; font-weight: 700;
+      cursor: pointer;
+    }
+    #loginError { color: #e74c3c; font-size: 0.82rem; margin-top: 8px; min-height: 18px; }
+
+    /* ── Admin Layout ── */
+    #adminApp { display: none; }
+    .admin-header {
+      background: linear-gradient(135deg, #d35400, #e67e22);
+      color: white; padding: 16px 32px;
+      display: flex; justify-content: space-between; align-items: center;
+      box-shadow: 0 4px 16px rgba(211,84,0,0.3);
+      position: sticky; top: 0; z-index: 100;
+    }
+    .admin-header h1 { font-size: 1.2rem; font-weight: 700; }
+    .admin-header span { font-size: 0.82rem; opacity: 0.85; }
+    .btn-logout {
+      padding: 7px 16px; background: rgba(255,255,255,0.2);
+      border: 1px solid rgba(255,255,255,0.4); border-radius: 20px;
+      color: white; font-family: "Poppins", sans-serif; font-size: 0.82rem;
+      cursor: pointer; font-weight: 600;
+    }
+
+    .admin-body { padding: 28px 32px; max-width: 1200px; margin: 0 auto; }
+
+    /* ── Tabs ── */
+    .admin-tabs { display: flex; gap: 8px; margin-bottom: 28px; flex-wrap: wrap; }
+    .tab-btn {
+      padding: 9px 20px; border: 2px solid #ffd7c2; border-radius: 30px;
+      background: white; font-family: "Poppins", sans-serif; font-size: 0.88rem;
+      font-weight: 600; color: #888; cursor: pointer; transition: all 0.2s;
+    }
+    .tab-btn.active { background: #d35400; border-color: #d35400; color: white; }
+    .tab-btn:hover:not(.active) { border-color: #d35400; color: #d35400; }
+
+    /* ── Stats Cards ── */
+    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 28px; }
+    .stat-card {
+      background: white; border-radius: 16px; padding: 20px 24px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    }
+    .stat-card .stat-label { color: #888; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+    .stat-card .stat-value { font-size: 2rem; font-weight: 800; color: #d35400; }
+    .stat-card .stat-sub   { color: #aaa; font-size: 0.78rem; margin-top: 2px; }
+
+    /* ── Filters ── */
+    .filter-row { display: flex; gap: 10px; margin-bottom: 18px; flex-wrap: wrap; align-items: center; }
+    .filter-row select, .filter-row input {
+      padding: 9px 14px; border: 2px solid #ffd7c2; border-radius: 10px;
+      font-family: "Poppins", sans-serif; font-size: 0.88rem;
+      outline: none; background: white;
+    }
+    .filter-row select:focus, .filter-row input:focus { border-color: #d35400; }
+
+    /* ── Orders Table ── */
+    .orders-table-wrap { background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
+    table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+    thead tr { background: #fff8f3; border-bottom: 2px solid #fdebd0; }
+    th { padding: 14px 16px; text-align: left; color: #888; font-weight: 600; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.5px; }
+    td { padding: 14px 16px; border-bottom: 1px solid #fdebd0; vertical-align: middle; }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: #fffaf5; }
+
+    /* ── Status Badge ── */
+    .status-badge {
+      padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 700;
+      display: inline-block;
+    }
+    .status-Confirmed    { background: #e8f4fd; color: #1a6fa8; }
+    .status-Pending      { background: #fff8e1; color: #b7860b; }
+    .status-Out-for-Delivery { background: #e8f5e9; color: #2e7d32; }
+    .status-Delivered    { background: #f0fff4; color: #27ae60; }
+    .status-Cancelled    { background: #fff0f0; color: #e74c3c; }
+    .status-Completed    { background: #f3e5f5; color: #7b1fa2; }
+
+    /* ── Status Update Select ── */
+    .status-select {
+      padding: 6px 10px; border: 2px solid #ffd7c2; border-radius: 8px;
+      font-family: "Poppins", sans-serif; font-size: 0.8rem; cursor: pointer;
+      outline: none; background: white; font-weight: 600;
+    }
+    .status-select:focus { border-color: #d35400; }
+
+    /* ── Order Items Expand ── */
+    .items-toggle { color: #d35400; cursor: pointer; font-size: 0.78rem; font-weight: 600; text-decoration: underline; background: none; border: none; font-family: "Poppins", sans-serif; }
+    .items-detail { font-size: 0.78rem; color: #666; line-height: 1.7; margin-top: 4px; display: none; }
+    .items-detail.show { display: block; }
+
+    /* ── Users Table ── */
+    .users-table-wrap { background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
+
+    /* ── Loading ── */
+    .loading-row td { text-align: center; padding: 40px; color: #aaa; }
+
+    /* ── Toast ── */
+    #adminToast {
+      position: fixed; bottom: 24px; right: 24px;
+      background: #222; color: white; padding: 12px 20px;
+      border-radius: 12px; font-size: 0.88rem; font-weight: 600;
+      opacity: 0; transition: opacity 0.3s; z-index: 9999;
+      pointer-events: none;
+    }
+    #adminToast.show { opacity: 1; }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .admin-body { padding: 16px; }
+      .admin-header { padding: 14px 16px; }
+      th, td { padding: 10px 10px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- LOGIN SCREEN -->
+<div id="loginScreen">
+  <div class="login-box">
+    <div class="logo">🧁</div>
+    <h1>Admin Panel</h1>
+    <p>My Bakery · Staff Access Only</p>
+    <input type="password" id="secretInput" placeholder="Enter admin secret" />
+    <button onclick="adminLogin()">Access Panel 🔐</button>
+    <p id="loginError"></p>
+  </div>
+</div>
+
+<!-- ADMIN APP -->
+<div id="adminApp">
+  <div class="admin-header">
+    <div>
+      <h1>🧁 My Bakery — Admin</h1>
+      <span id="adminSubtitle">Dashboard</span>
+    </div>
+    <button class="btn-logout" onclick="adminLogout()">Logout</button>
+  </div>
+
+  <div class="admin-body">
+    <!-- Tabs -->
+    <div class="admin-tabs">
+      <button class="tab-btn active" onclick="showTab('orders', this)">📦 Orders</button>
+      <button class="tab-btn" onclick="showTab('stats', this)">📊 Stats</button>
+      <button class="tab-btn" onclick="showTab('users', this)">👥 Users</button>
+    </div>
+
+    <!-- ORDERS TAB -->
+    <div id="tab-orders">
+      <div class="filter-row">
+        <select id="statusFilter" onchange="loadOrders()">
+          <option value="all">All Orders</option>
+          <option value="Confirmed">Confirmed</option>
+          <option value="Pending">Pending</option>
+          <option value="Out for Delivery">Out for Delivery</option>
+          <option value="Delivered">Delivered</option>
+          <option value="Cancelled">Cancelled</option>
+          <option value="Completed">Completed</option>
+        </select>
+        <button class="tab-btn" onclick="loadOrders()" style="padding:9px 16px;">🔄 Refresh</button>
+        <span id="ordersCount" style="color:#888;font-size:0.82rem;margin-left:4px;"></span>
+      </div>
+      <div class="orders-table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Order ID</th>
+              <th>Customer</th>
+              <th>Items</th>
+              <th>Total</th>
+              <th>Slot</th>
+              <th>Placed At</th>
+              <th>Status</th>
+              <th>Update</th>
+            </tr>
+          </thead>
+          <tbody id="ordersBody">
+            <tr class="loading-row"><td colspan="8">Loading orders... ⏳</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- STATS TAB -->
+    <div id="tab-stats" style="display:none;">
+      <div class="stats-grid" id="statsGrid">
+        <div class="stat-card"><div class="stat-label">Total Orders</div><div class="stat-value" id="s-orders">—</div></div>
+        <div class="stat-card"><div class="stat-label">Total Users</div><div class="stat-value" id="s-users">—</div></div>
+        <div class="stat-card"><div class="stat-label">Total Revenue</div><div class="stat-value" id="s-revenue">—</div><div class="stat-sub">(excl. cancelled)</div></div>
+        <div class="stat-card"><div class="stat-label">Confirmed</div><div class="stat-value" id="s-confirmed">—</div></div>
+        <div class="stat-card"><div class="stat-label">Out for Delivery</div><div class="stat-value" id="s-ofd">—</div></div>
+        <div class="stat-card"><div class="stat-label">Delivered</div><div class="stat-value" id="s-delivered">—</div></div>
+        <div class="stat-card"><div class="stat-label">Cancelled</div><div class="stat-value" id="s-cancelled">—</div></div>
+      </div>
+    </div>
+
+    <!-- USERS TAB -->
+    <div id="tab-users" style="display:none;">
+      <div class="users-table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th><th>Name</th><th>Email</th><th>Phone</th><th>Joined</th>
+            </tr>
+          </thead>
+          <tbody id="usersBody">
+            <tr class="loading-row"><td colspan="5">Loading users... ⏳</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div id="adminToast"></div>
+
+<script>
+const RENDER_API = "https://bakery-backend-v2-c7d2.onrender.com/api";
+let ADMIN_SECRET = "";
+
+// ── Login ────────────────────────────────────────────────────
+async function adminLogin() {
+  const secret = document.getElementById("secretInput").value.trim();
+  if (!secret) { showLoginError("Please enter the admin secret."); return; }
+
+  // Test credentials by hitting stats endpoint
+  const res = await fetch(`${RENDER_API}/admin/stats`, {
+    headers: { "x-admin-secret": secret }
+  });
+  const data = await res.json();
+
+  if (res.ok && data.success) {
+    ADMIN_SECRET = secret;
+    sessionStorage.setItem("adminSecret", secret);
+    document.getElementById("loginScreen").style.display = "none";
+    document.getElementById("adminApp").style.display    = "block";
+    renderStats(data.stats);
+    showTab("orders");
+    loadOrders();
+  } else {
+    showLoginError("Incorrect secret. Access denied.");
+  }
+}
+
+function adminLogout() {
+  sessionStorage.removeItem("adminSecret");
+  ADMIN_SECRET = "";
+  document.getElementById("loginScreen").style.display = "flex";
+  document.getElementById("adminApp").style.display    = "none";
+  document.getElementById("secretInput").value = "";
+}
+
+function showLoginError(msg) {
+  document.getElementById("loginError").textContent = msg;
+}
+
+// Auto-login if secret in sessionStorage
+window.addEventListener("DOMContentLoaded", () => {
+  const saved = sessionStorage.getItem("adminSecret");
+  if (saved) {
+    document.getElementById("secretInput").value = saved;
+    adminLogin();
+  }
+  document.getElementById("secretInput").addEventListener("keydown", e => {
+    if (e.key === "Enter") adminLogin();
+  });
+});
+
+// ── Tabs ────────────────────────────────────────────────────
+function showTab(name, btn) {
+  ["orders","stats","users"].forEach(t => {
+    document.getElementById(`tab-${t}`).style.display = t === name ? "block" : "none";
+  });
+  document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+  if (btn) btn.classList.add("active");
+  document.getElementById("adminSubtitle").textContent =
+    name === "orders" ? "Order Management" : name === "stats" ? "Dashboard Stats" : "User List";
+
+  if (name === "stats") loadStats();
+  if (name === "users") loadUsers();
+}
+
+// ── Orders ──────────────────────────────────────────────────
+async function loadOrders() {
+  const status = document.getElementById("statusFilter").value;
+  const tbody  = document.getElementById("ordersBody");
+  tbody.innerHTML = '<tr class="loading-row"><td colspan="8">Loading... ⏳</td></tr>';
+
+  const res  = await fetch(`${RENDER_API}/admin/orders?status=${status}&limit=50`, {
+    headers: { "x-admin-secret": ADMIN_SECRET }
+  });
+  const data = await res.json();
+
+  if (!data.success) { tbody.innerHTML = `<tr class="loading-row"><td colspan="8">Error: ${data.message}</td></tr>`; return; }
+
+  document.getElementById("ordersCount").textContent = `${data.total} orders`;
+
+  if (!data.orders.length) {
+    tbody.innerHTML = '<tr class="loading-row"><td colspan="8">No orders found.</td></tr>'; return;
+  }
+
+  tbody.innerHTML = data.orders.map(order => {
+    const statusClass = "status-" + order.status.replace(/ /g, "-");
+    const placed = new Date(order.placed_at).toLocaleString("en-IN", { day:"2-digit", month:"short", hour:"2-digit", minute:"2-digit" });
+    const itemsText = order.items.map(i => `${i.name} ×${i.quantity}`).join(", ");
+    const rowId = order._id;
+    return `
+      <tr>
+        <td><strong style="color:#d35400;">${order.id}</strong></td>
+        <td>
+          <strong>${order.customer?.name || "—"}</strong><br/>
+          <span style="color:#888;font-size:0.76rem;">${order.customer?.email || ""}</span>
+        </td>
+        <td>
+          <button class="items-toggle" onclick="toggleItems('${rowId}')">
+            ${order.items.length} item${order.items.length > 1 ? "s" : ""}
+          </button>
+          <div class="items-detail" id="items-${rowId}">${itemsText}</div>
+        </td>
+        <td><strong>₹${order.grand_total}</strong></td>
+        <td style="font-size:0.78rem;color:#666;">${order.deliverySlot || "ASAP"}</td>
+        <td style="font-size:0.78rem;color:#888;">${placed}</td>
+        <td><span class="status-badge ${statusClass}">${order.status}</span></td>
+        <td>
+          <select class="status-select" onchange="updateStatus('${order._id}', this)">
+            <option value="">— Change —</option>
+            <option value="Confirmed">Confirmed</option>
+            <option value="Out for Delivery">Out for Delivery</option>
+            <option value="Delivered">Delivered</option>
+            <option value="Cancelled">Cancelled</option>
+            <option value="Completed">Completed</option>
+          </select>
+        </td>
+      </tr>`;
+  }).join("");
+}
+
+function toggleItems(rowId) {
+  const el = document.getElementById(`items-${rowId}`);
+  if (el) el.classList.toggle("show");
+}
+
+async function updateStatus(orderId, selectEl) {
+  const newStatus = selectEl.value;
+  if (!newStatus) return;
+
+  const res  = await fetch(`${RENDER_API}/admin/orders/${orderId}/status`, {
+    method:  "PATCH",
+    headers: { "Content-Type": "application/json", "x-admin-secret": ADMIN_SECRET },
+    body:    JSON.stringify({ status: newStatus }),
+  });
+  const data = await res.json();
+
+  selectEl.value = ""; // reset dropdown
+
+  if (data.success) {
+    toast(`✅ Order updated → ${newStatus}`);
+    setTimeout(loadOrders, 800);
+  } else {
+    toast(`❌ ${data.message}`);
+  }
+}
+
+// ── Stats ────────────────────────────────────────────────────
+async function loadStats() {
+  const res  = await fetch(`${RENDER_API}/admin/stats`, { headers: { "x-admin-secret": ADMIN_SECRET } });
+  const data = await res.json();
+  if (data.success) renderStats(data.stats);
+}
+
+function renderStats(stats) {
+  document.getElementById("s-orders").textContent    = stats.totalOrders;
+  document.getElementById("s-users").textContent     = stats.totalUsers;
+  document.getElementById("s-revenue").textContent   = `₹${stats.totalRevenue.toLocaleString("en-IN")}`;
+  document.getElementById("s-confirmed").textContent = stats.statusBreakdown?.Confirmed || 0;
+  document.getElementById("s-ofd").textContent       = stats.statusBreakdown?.["Out for Delivery"] || 0;
+  document.getElementById("s-delivered").textContent = stats.statusBreakdown?.Delivered || 0;
+  document.getElementById("s-cancelled").textContent = stats.statusBreakdown?.Cancelled || 0;
+}
+
+// ── Users ────────────────────────────────────────────────────
+async function loadUsers() {
+  const tbody = document.getElementById("usersBody");
+  tbody.innerHTML = '<tr class="loading-row"><td colspan="5">Loading... ⏳</td></tr>';
+
+  const res  = await fetch(`${RENDER_API}/admin/users`, { headers: { "x-admin-secret": ADMIN_SECRET } });
+  const data = await res.json();
+
+  if (!data.success) { tbody.innerHTML = `<tr class="loading-row"><td colspan="5">Error loading users.</td></tr>`; return; }
+
+  tbody.innerHTML = data.users.map((u, i) => `
+    <tr>
+      <td style="color:#aaa;">${i + 1}</td>
+      <td><strong>${u.name}</strong></td>
+      <td style="color:#555;">${u.email}</td>
+      <td style="color:#888;">${u.phone || "—"}</td>
+      <td style="color:#aaa;font-size:0.78rem;">${new Date(u.createdAt).toLocaleDateString("en-IN")}</td>
+    </tr>`).join("");
+}
+
+// ── Toast ────────────────────────────────────────────────────
+function toast(msg) {
+  const el = document.getElementById("adminToast");
+  el.textContent = msg;
+  el.classList.add("show");
+  setTimeout(() => el.classList.remove("show"), 3000);
+}
+</script>
+</body>
+</html>

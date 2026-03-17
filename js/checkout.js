@@ -7,6 +7,7 @@ const VALID_COUPONS = { SWEET10: 10, BAKERY20: 20, FIRST15: 15 };
 
 let orderSummary  = null;   // populated from /api/payment/create-order
 let appliedCoupon = null;
+let selectedSlot  = 'ASAP';  // delivery time slot
 
 // ── Boot ──────────────────────────────────────────────────────
 document.addEventListener("DOMContentLoaded", async () => {
@@ -118,6 +119,14 @@ function applyCoupon() {
   }
 }
 
+
+// ── Delivery slot selection ───────────────────────────────────
+function selectSlot(btn) {
+  document.querySelectorAll(".slot-btn").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+  selectedSlot = btn.dataset.slot;
+}
+
 // ── Address ───────────────────────────────────────────────────
 async function loadAddress() {
   const user = getUser();
@@ -217,7 +226,7 @@ async function placeOrderCOD() {
   btn.disabled = true;
   document.getElementById("payBtnText").textContent = "Placing Order... ⏳";
 
-  const res = await api.post("/orders", { couponCode: appliedCoupon });
+  const res = await api.post("/orders", { couponCode: appliedCoupon, deliverySlot: selectedSlot });
 
   btn.disabled = false;
   updateTotals();
@@ -238,7 +247,7 @@ async function openRazorpay() {
   document.getElementById("payBtnText").textContent = "Opening Payment... ⏳";
 
   // Step 1: Create Razorpay order on backend
-  const orderRes = await api.post("/payment/create-order", { couponCode: appliedCoupon });
+  const orderRes = await api.post("/payment/create-order", { couponCode: appliedCoupon, deliverySlot: selectedSlot });
 
   if (!orderRes || !orderRes.success) {
     btn.disabled = false;
@@ -279,6 +288,7 @@ async function openRazorpay() {
         razorpay_payment_id: response.razorpay_payment_id,
         razorpay_signature:  response.razorpay_signature,
         couponCode:          appliedCoupon,
+        deliverySlot:        selectedSlot,
       });
 
       btn.disabled = false;

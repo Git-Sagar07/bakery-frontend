@@ -141,7 +141,7 @@ function renderOrderCard(order, showCancel) {
         <div class="order-total">Total: <strong>₹${order.grand_total}</strong></div>
       </div>
       <div class="order-actions">
-        <a href="menu.html" class="btn-reorder">Reorder 🔁</a>
+        <button class="btn-reorder" onclick='reorder(${JSON.stringify(order.items).replace(/'/g,"\\'")}, "${order._id}")'>Reorder 🔁</button>
         ${showCancel ? `<button class="btn-cancel-order" onclick='cancelOrder("${order._id}")'>Cancel Order ✕</button>` : ""}
       </div>
     </div>
@@ -309,4 +309,32 @@ function showNotification(message) {
   document.body.appendChild(n);
   setTimeout(() => n.classList.add("show"), 100);
   setTimeout(() => { n.classList.remove("show"); setTimeout(() => n.remove(), 300); }, 3000);
+}
+
+// ── Reorder — adds all items from a past order back to cart ──
+async function reorder(items, orderId) {
+  if (!items || items.length === 0) { showNotification("No items to reorder."); return; }
+
+  const btn = event.target;
+  btn.disabled    = true;
+  btn.textContent = "Adding... ⏳";
+
+  let successCount = 0;
+  let failCount    = 0;
+
+  for (const item of items) {
+    const res = await api.post("/cart", { productId: item.id, quantity: item.quantity });
+    if (res && res.success) { successCount++; } else { failCount++; }
+  }
+
+  btn.disabled    = false;
+  btn.textContent = "Reorder 🔁";
+
+  if (successCount > 0) {
+    showNotification(`✅ ${successCount} item${successCount > 1 ? "s" : ""} added to cart!`);
+    updateNavCartCount();
+    setTimeout(() => { window.location.href = "cart.html"; }, 1200);
+  } else {
+    showNotification("Could not add items. Please try again.");
+  }
 }

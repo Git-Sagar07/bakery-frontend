@@ -3,6 +3,18 @@
 //  Loads navbar + footer, initialises user session from API
 // ============================================================
 
+// ── Page loader bar ──────────────────────────────────────────
+(function() {
+  const bar = document.createElement("div");
+  bar.className = "page-loader";
+  bar.id = "pageLoader";
+  document.documentElement.appendChild(bar);
+  window.hidePageLoader = function() {
+    const el = document.getElementById("pageLoader");
+    if (el) { el.style.opacity = "0"; el.style.transition = "opacity 0.4s"; setTimeout(() => el.remove(), 400); }
+  };
+})();
+
 document.addEventListener("DOMContentLoaded", async () => {
   // Component paths use absolute roots so they work from / and /pages/
   await loadComponent("navbar", "/components/navbar.html", "navbar-container");
@@ -10,6 +22,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   // Bootstrap user session from API (one request, cached in window._currentUser)
   await initUser();
+  if (window.hidePageLoader) window.hidePageLoader();
 
   // Now update navbar with logged-in state
   updateNavbar();

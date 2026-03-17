@@ -1,4 +1,4 @@
-# 🧁 My Bakery - Frontend v2.0
+# 🧁 My Bakery - Frontend v.0
 
 ## Project Structure
 
@@ -40,6 +40,7 @@ python -m http.server 3000
 ```
 
 Then open: http://localhost:3000/pages/index.html
+           
 
 ## Coupon Codes (for testing)
 
@@ -47,8 +48,8 @@ Then open: http://localhost:3000/pages/index.html
 - BAKERY20 → 20% off
 - FIRST15 → 15% off
 
-## Backend (coming soon with Express + Node.js)
-
+## Backend ( with Express + Node.js)
+on render 
 Currently using localStorage for:
 
 - User authentication

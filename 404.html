@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Page Not Found — My Bakery</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Pacifico&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="/css/navbar.css" />
+  <style>
+    .notfound-section {
+      min-height: 82vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #fffaf5;
+      padding: 60px 5%;
+      text-align: center;
+    }
+    .notfound-card {
+      max-width: 480px;
+    }
+    .notfound-emoji {
+      font-size: 6rem;
+      line-height: 1;
+      margin-bottom: 16px;
+      animation: wobble 2s ease-in-out infinite;
+    }
+    @keyframes wobble {
+      0%,100% { transform: rotate(-4deg); }
+      50%      { transform: rotate(4deg);  }
+    }
+    .notfound-card h1 {
+      font-size: 6rem;
+      font-weight: 800;
+      color: #d35400;
+      margin: 0;
+      line-height: 1;
+    }
+    .notfound-card h2 {
+      font-size: 1.5rem;
+      color: #333;
+      margin: 12px 0 8px;
+    }
+    .notfound-card p {
+      color: #888;
+      font-size: 0.95rem;
+      margin: 0 0 32px;
+      line-height: 1.6;
+    }
+    .notfound-actions {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .btn-home {
+      padding: 13px 28px;
+      background: linear-gradient(135deg, #d35400, #e67e22);
+      color: white;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.95rem;
+      transition: all 0.25s cubic-bezier(0.34,1.56,0.64,1);
+      box-shadow: 0 4px 16px rgba(211,84,0,0.3);
+    }
+    .btn-home:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(211,84,0,0.4); }
+    .btn-menu {
+      padding: 13px 28px;
+      background: white;
+      color: #d35400;
+      border: 2px solid #ffd7c2;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.95rem;
+      transition: all 0.2s ease;
+    }
+    .btn-menu:hover { background: #fff3e8; border-color: #d35400; }
+    .crumbs {
+      margin-top: 40px;
+      color: #ccc;
+      font-size: 0.8rem;
+    }
+  </style>
+</head>
+<body>
+  <div id="navbar-container"></div>
+
+  <section class="notfound-section">
+    <div class="notfound-card">
+      <div class="notfound-emoji">🥐</div>
+      <h1>404</h1>
+      <h2>This page got baked away!</h2>
+      <p>Looks like this page doesn't exist — maybe it was eaten, or the URL is wrong. Either way, there are plenty of fresh treats waiting for you.</p>
+      <div class="notfound-actions">
+        <a href="/index.html" class="btn-home">🏠 Back to Home</a>
+        <a href="/pages/menu.html" class="btn-menu">🍰 View Menu</a>
+      </div>
+      <p class="crumbs">🍞 Following the breadcrumbs...</p>
+    </div>
+  </section>
+
+  <div id="footer-container"></div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/authHelper.js"></script>
+  <script src="/js/component.js"></script>
+</body>
+</html>
