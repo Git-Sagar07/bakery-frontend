@@ -44,7 +44,7 @@
         <!-- Coupon -->
         <div class="coupon-section">
           <div class="coupon-input-row">
-            <input type="text" id="coCouponInput" placeholder="Coupon code" maxlength="12" />
+            <input type="text" id="coCouponInput" placeholder="Coupon code" maxlength="12" autocomplete="off" style="text-transform:uppercase" />
             <button onclick="applyCoupon()">Apply</button>
           </div>
           <p id="coCouponMsg" class="coupon-msg"></p>
@@ -61,15 +61,15 @@
           <button class="btn-edit-address" onclick="toggleAddressEdit()">✏️ Edit Address</button>
           <div id="addressEditForm" class="address-edit-form" style="display:none;">
             <div class="form-row">
-              <input type="text"  id="addrName"     placeholder="Full Name *" />
-              <input type="tel"   id="addrPhone"    placeholder="Phone *" maxlength="10" />
+              <input type="text"  id="addrName"     placeholder="Full Name *" autocomplete="name" />
+              <input type="tel"   id="addrPhone"    placeholder="Phone *" maxlength="10" autocomplete="tel" />
             </div>
-            <input type="text"  id="addrStreet"   placeholder="Street / Flat / Building *" />
+            <input type="text"  id="addrStreet"   placeholder="Street / Flat / Building *" autocomplete="address-line1" />
             <div class="form-row">
-              <input type="text"  id="addrCity"     placeholder="City *" />
-              <input type="text"  id="addrPin"      placeholder="Pincode *" maxlength="6" />
+              <input type="text"  id="addrCity"     placeholder="City *" autocomplete="address-level2" />
+              <input type="text"  id="addrPin"      placeholder="Pincode *" maxlength="6" autocomplete="postal-code" inputmode="numeric" />
             </div>
-            <input type="text"  id="addrLandmark" placeholder="Landmark (optional)" />
+            <input type="text"  id="addrLandmark" placeholder="Landmark (optional)" autocomplete="off" />
             <button class="btn-save-addr" onclick="saveAddressFromCheckout()">Save Address</button>
           </div>
         </div>

@@ -11,14 +11,20 @@ let selectedSlot  = 'ASAP';  // delivery time slot
 
 // ── Boot ──────────────────────────────────────────────────────
 document.addEventListener("DOMContentLoaded", async () => {
-  if (!(await isLoggedIn())) {
+  // Wait for user session to fully resolve before anything else
+  // This prevents the 401 race condition on /auth/me
+  const loggedIn = await isLoggedIn();
+  if (!loggedIn) {
     showToast("Please login to checkout 🔐");
     setTimeout(() => { window.location.href = "login.html"; }, 1400);
     return;
   }
 
-  await loadCheckoutSummary();
-  await loadAddress();
+  // Run address + cart load in parallel — faster page load
+  await Promise.all([
+    loadCheckoutSummary(),
+    loadAddress(),
+  ]);
   setupPaymentToggle();
 });
 
